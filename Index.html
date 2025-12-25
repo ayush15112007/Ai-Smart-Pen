@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Smart Pen | The Future of Writing</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#050505',
+                        glass: '#121212',
+                        cyan: '#00F0FF',
+                        mint: '#00FFA3',
+                        blue: '#2D6BFF',
+                        text: '#E0E0E0'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(0, 240, 255, 0.2)' },
+                            '100%': { boxShadow: '0 0 20px rgba(0, 240, 255, 0.6)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #E0E0E0;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Logic */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Smooth Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Selection */
+        ::selection {
+            background: #00F0FF;
+            color: #000;
+        }
+        
+        /* Hide Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00F0FF; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="fixed w-full z-50 glass-panel border-b-0">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-heading font-bold tracking-tight text-white hover:text-cyan transition-colors" data-sound="hover">
+                AI <span class="text-cyan">Smart Pen</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-400">
+                <a href="#product" class="hover:text-white transition-colors" data-sound="hover">Product</a>
+                <a href="#how-it-works" class="hover:text-white transition-colors" data-sound="hover">How It Works</a>
+                <a href="#pricing" class="hover:text-white transition-colors" data-sound="hover">Pricing</a>
+                <a href="#about" class="hover:text-white transition-colors" data-sound="hover">About</a>
+                
+                <button id="mute-btn" class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:border-cyan text-cyan transition-all" data-sound="click">
+                    <i class="fas fa-volume-up text-xs"></i>
+                </button>
+
+                <a href="https://www.instagram.com/ayush_1511__/" target="_blank" class="px-6 py-2 bg-white text-black font-bold rounded-full hover:bg-cyan hover:scale-105 transition-all duration-300" data-sound="click">
+                    Pre-Order
+                </a>
+            </div>
+
+            <button class="md:hidden text-white" onclick="toggleMobileMenu()" data-sound="click">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+            <div class="absolute top-[20%] left-[20%] w-[500px] h-[500px] bg-blue/10 rounded-full blur-[120px] animate-pulse"></div>
+            <div class="absolute bottom-[20%] right-[20%] w-[400px] h-[400px] bg-cyan/10 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 text-center z-10">
+            <div class="inline-block px-4 py-1 mb-6 rounded-full border border-cyan/20 bg-cyan/5 text-cyan text-xs font-bold tracking-[0.2em] uppercase reveal">
+                Zero Distractions. Pure Focus.
+            </div>
+
+            <h1 class="text-5xl md:text-8xl font-heading font-bold leading-tight mb-8 reveal">
+                Think. Write. <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan to-mint">Ask.</span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 font-light reveal delay-100">
+                The world's first AI-powered pen. Solve doubts, generate ideas, and define concepts instantly—without ever switching screens.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-5 mb-20 reveal delay-200">
+                <a href="https://www.instagram.com/ayush_1511__/" target="_blank" class="px-10 py-4 bg-cyan text-black font-bold text-lg rounded-full shadow-[0_0_30px_rgba(0,240,255,0.3)] hover:shadow-[0_0_50px_rgba(0,240,255,0.5)] hover:-translate-y-1 transition-all duration-300" data-sound="click">
+                    Pre-Order Now
+                </a>
+                <button class="px-10 py-4 border border-white/20 text-white font-medium text-lg rounded-full hover:bg-white/5 transition-all duration-300 flex items-center justify-center gap-3" data-sound="click">
+                    <i class="fas fa-play text-xs"></i> Watch Demo
+                </button>
+            </div>
+
+            <div class="relative w-10 h-[400px] mx-auto bg-gradient-to-b from-gray-700 via-gray-800 to-black rounded-full shadow-2xl animate-float border-l border-white/10 reveal delay-300 group cursor-pointer" data-sound="hover">
+                <div class="absolute bottom-0 w-full h-12 bg-cyan rounded-b-full shadow-[0_0_40px_rgba(0,240,255,0.8)]"></div>
+                <div class="absolute top-[40%] w-full h-1 bg-mint shadow-[0_0_15px_#00FFA3] opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                <div class="absolute top-[25%] left-1/2 -translate-x-1/2 w-4 h-16 bg-gray-600 rounded-full border border-white/10"></div>
+            </div>
+        </div>
+    </header>
+
+    <section id="product" class="py-24 bg-bg border-t border-white/5 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-panel p-10 rounded-3xl hover:border-cyan/50 transition-all duration-500 group reveal" data-sound="hover">
+                    <div class="w-14 h-14 bg-cyan/10 rounded-2xl flex items-center justify-center mb-6 text-cyan group-hover:scale-110 transition-transform">
+                        <i class="fas fa-microphone-lines text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Voice AI</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Whisper a question. Hear the answer via bone-conduction audio. No screens required.</p>
+                </div>
+
+                <div class="glass-panel p-10 rounded-3xl hover:border-mint/50 transition-all duration-500 group reveal delay-100" data-sound="hover">
+                    <div class="w-14 h-14 bg-mint/10 rounded-2xl flex items-center justify-center mb-6 text-mint group-hover:scale-110 transition-transform">
+                        <i class="fas fa-brain text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Instant Doubts</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Stuck on a math problem or word definition? Get explanations in real-time while you write.</p>
+                </div>
+
+                <div class="glass-panel p-10 rounded-3xl hover:border-blue/50 transition-all duration-500 group reveal delay-200" data-sound="hover">
+                    <div class="w-14 h-14 bg-blue/10 rounded-2xl flex items-center justify-center mb-6 text-blue group-hover:scale-110 transition-transform">
+                        <i class="fas fa-shield-halved text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Privacy First</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Your thoughts are yours. Audio is processed locally where possible. No Exam Mode ensures integrity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="py-32 bg-black relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue/5 via-transparent to-transparent"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-4xl font-heading font-bold mb-20 reveal">Fluid Intelligence</h2>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-24">
+                <div class="group reveal cursor-pointer" data-sound="hover">
+                    <div class="w-24 h-24 mx-auto rounded-full border border-white/10 bg-glass flex items-center justify-center mb-6 group-hover:border-cyan group-hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-500">
+                        <i class="fas fa-fingerprint text-3xl text-gray-400 group-hover:text-cyan transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Press</h3>
+                    <p class="text-xs text-gray-500 uppercase tracking-widest">Tactile Grip</p>
+                </div>
+
+                <div class="hidden md:block w-24 h-[1px] bg-gradient-to-r from-transparent via-gray-700 to-transparent reveal"></div>
+
+                <div class="group reveal delay-100 cursor-pointer" data-sound="hover">
+                    <div class="w-24 h-24 mx-auto rounded-full border border-white/10 bg-glass flex items-center justify-center mb-6 group-hover:border-mint group-hover:shadow-[0_0_30px_rgba(0,255,163,0.2)] transition-all duration-500">
+                        <i class="fas fa-comment-dots text-3xl text-gray-400 group-hover:text-mint transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Ask</h3>
+                    <p class="text-xs text-gray-500 uppercase tracking-widest">Natural Voice</p>
+                </div>
+
+                <div class="hidden md:block w-24 h-[1px] bg-gradient-to-r from-transparent via-gray-700 to-transparent reveal"></div>
+
+                <div class="group reveal delay-200 cursor-pointer" data-sound="hover">
+                    <div class="w-24 h-24 mx-auto rounded-full border border-white/10 bg-glass flex items-center justify-center mb-6 group-hover:border-blue group-hover:shadow-[0_0_30px_rgba(45,107,255,0.2)] transition-all duration-500">
+                        <i class="fas fa-pen-nib text-3xl text-gray-400 group-hover:text-blue transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Write</h3>
+                    <p class="text-xs text-gray-500 uppercase tracking-widest">Unbroken Flow</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="who" class="py-24 bg-bg border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+             <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                 <div class="p-6 text-center border border-white/5 rounded-xl hover:bg-white/5 transition-colors reveal" data-sound="hover">
+                     <i class="fas fa-graduation-cap text-cyan mb-3 text-xl"></i>
+                     <p class="font-medium text-sm">Students</p>
+                 </div>
+                 <div class="p-6 text-center border border-white/5 rounded-xl hover:bg-white/5 transition-colors reveal delay-75" data-sound="hover">
+                     <i class="fas fa-chalkboard-user text-mint mb-3 text-xl"></i>
+                     <p class="font-medium text-sm">Teachers</p>
+                 </div>
+                 <div class="p-6 text-center border border-white/5 rounded-xl hover:bg-white/5 transition-colors reveal delay-100" data-sound="hover">
+                    <i class="fas fa-briefcase text-blue mb-3 text-xl"></i>
+                    <p class="font-medium text-sm">Professionals</p>
+                </div>
+                <div class="p-6 text-center border border-white/5 rounded-xl hover:bg-white/5 transition-colors reveal delay-150" data-sound="hover">
+                    <i class="fas fa-feather-pointed text-purple-400 mb-3 text-xl"></i>
+                    <p class="font-medium text-sm">Writers</p>
+                </div>
+                <div class="p-6 text-center border border-white/5 rounded-xl hover:bg-white/5 transition-colors reveal delay-200" data-sound="hover">
+                    <i class="fas fa-microscope text-red-400 mb-3 text-xl"></i>
+                    <p class="font-medium text-sm">Researchers</p>
+                </div>
+             </div>
+        </div>
+    </section>
+
+    <section id="benefits" class="py-24">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-3xl font-heading font-bold mb-12 text-center reveal">Why Switch?</h2>
+            <div class="space-y-6">
+                <div class="glass-panel p-6 rounded-xl flex items-center gap-4 reveal hover:bg-white/5 transition-colors" data-sound="hover">
+                    <div class="w-2 h-12 bg-cyan rounded-full"></div>
+                    <div>
+                        <h4 class="font-bold text-lg">Deep Focus</h4>
+                        <p class="text-sm text-gray-400">Reduces screen time by 40%. Stay in the zone.</p>
+                    </div>
+                </div>
+                <div class="glass-panel p-6 rounded-xl flex items-center gap-4 reveal delay-100 hover:bg-white/5 transition-colors" data-sound="hover">
+                    <div class="w-2 h-12 bg-mint rounded-full"></div>
+                    <div>
+                        <h4 class="font-bold text-lg">10x Learning Speed</h4>
+                        <p class="text-sm text-gray-400">Instant answers mean you never stop to search.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-32 bg-glass relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-heading font-bold mb-4">Invest in Your Mind</h2>
+                <p class="text-gray-500">Pre-Order pricing ending soon.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 items-center max-w-5xl mx-auto">
+                <div class="p-8 rounded-2xl border border-white/5 hover:border-white/20 transition-all reveal" data-sound="hover">
+                    <h3 class="text-xl font-medium text-gray-400">Student</h3>
+                    <div class="text-3xl font-bold mt-4 mb-6">₹1,499</div>
+                    <ul class="text-sm text-gray-500 space-y-3 mb-8">
+                        <li>• AI Smart Pen (Basic)</li>
+                        <li>• 1 Year App Access</li>
+                        <li>• Matte Black Finish</li>
+                    </ul>
+                    <a href="https://www.instagram.com/ayush_1511__/" target="_blank" class="block w-full py-3 border border-white/20 rounded-lg text-center hover:bg-white hover:text-black transition-all font-medium" data-sound="click">Pre-Order</a>
+                </div>
+
+                <div class="p-10 rounded-3xl bg-gradient-to-b from-gray-900 to-black border border-cyan/30 shadow-[0_0_40px_rgba(0,240,255,0.1)] transform md:scale-110 relative z-10 reveal delay-100" data-sound="hover">
+                    <div class="absolute top-0 right-0 bg-cyan text-black text-xs font-bold px-3 py-1 rounded-bl-xl rounded-tr-2xl">POPULAR</div>
+                    <h3 class="text-xl font-bold text-white">Pro Plan</h3>
+                    <div class="text-4xl font-bold mt-4 mb-6 text-cyan">₹1,999</div>
+                    <ul class="text-sm text-gray-300 space-y-4 mb-8">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan"></i> AI Smart Pen (Pro)</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan"></i> Priority AI Response</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan"></i> Extra Ink Refills</li>
+                    </ul>
+                    <a href="https://www.instagram.com/ayush_1511__/" target="_blank" class="block w-full py-4 bg-cyan text-black rounded-lg text-center hover:bg-white transition-all font-bold shadow-lg shadow-cyan/20" data-sound="click">Pre-Order</a>
+                </div>
+
+                <div class="p-8 rounded-2xl border border-white/5 hover:border-white/20 transition-all reveal delay-200" data-sound="hover">
+                    <h3 class="text-xl font-medium text-gray-400">Creator</h3>
+                    <div class="text-3xl font-bold mt-4 mb-6">₹2,499</div>
+                    <ul class="text-sm text-gray-500 space-y-3 mb-8">
+                        <li>• Limited Edition Color</li>
+                        <li>• Advanced Creative AI</li>
+                        <li>• Premium Carry Case</li>
+                    </ul>
+                    <a href="https://www.instagram.com/ayush_1511__/" target="_blank" class="block w-full py-3 border border-white/20 rounded-lg text-center hover:bg-white hover:text-black transition-all font-medium" data-sound="click">Pre-Order</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 bg-bg border-t border-white/5">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-heading font-bold mb-12 reveal">The Vision</h2>
+            
+            <div class="glass-panel p-10 rounded-3xl relative overflow-hidden reveal">
+                <div class="absolute -top-20 -right-20 w-64 h-64 bg-cyan/10 rounded-full blur-[80px]"></div>
+
+                <div class="w-20 h-20 mx-auto bg-gradient-to-br from-gray-700 to-black rounded-full border border-white/20 flex items-center justify-center text-2xl font-bold text-white mb-6">A</div>
+                
+                <h3 class="text-2xl font-bold mb-2">Aayush</h3>
+                <p class="text-cyan text-xs font-bold tracking-widest uppercase mb-6">Founder & Creator</p>
+                
+                <p class="text-gray-400 italic mb-8 leading-relaxed">
+                    "We are building a future where technology enhances our humanity, not distracts from it. The AI Smart Pen is just the beginning."
+                </p>
+
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 text-xs text-gray-500">
+                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    Roadmap: AI Smart Pen 2.0 (App Integration)
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black py-12 border-t border-white/5 text-center text-sm text-gray-600">
+        <p class="mb-4">Designed for the future.</p>
+        <p>&copy; 2025 AI Smart Pen. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // --- AUDIO ENGINE (Web Audio API) ---
+        // This generates sounds on the fly (Synthesizer) to avoid external files.
+        
+        let audioCtx;
+        let isMuted = false;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Toggle Mute
+        const muteBtn = document.getElementById('mute-btn');
+        muteBtn.addEventListener('click', () => {
+            isMuted = !isMuted;
+            const icon = muteBtn.querySelector('i');
+            if (isMuted) {
+                icon.classList.remove('fa-volume-up');
+                icon.classList.add('fa-volume-mute');
+                muteBtn.classList.add('opacity-50');
+            } else {
+                icon.classList.remove('fa-volume-mute');
+                icon.classList.add('fa-volume-up');
+                muteBtn.classList.remove('opacity-50');
+            }
+        });
+
+        // Sound Synthesis Functions
+        function playHoverSound() {
+            if (isMuted || !audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            // High frequency, very short "blip"
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.05);
+            
+            gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
+        }
+
+        function playClickSound() {
+            if (isMuted || !audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            // Lower frequency "thock" sound
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.1);
+            
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        // --- EVENT LISTENERS ---
+        
+        // Initialize audio on first click anywhere
+        document.body.addEventListener('click', () => {
+            initAudio();
+            if(audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }, { once: true });
+
+        // Attach sounds to elements
+        document.querySelectorAll('[data-sound="hover"]').forEach(el => {
+            el.addEventListener('mouseenter', playHoverSound);
+        });
+
+        document.querySelectorAll('[data-sound="click"]').forEach(el => {
+            el.addEventListener('click', playClickSound);
+        });
+
+        // --- SCROLL ANIMATIONS ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
